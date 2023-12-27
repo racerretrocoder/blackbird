@@ -1,0 +1,370 @@
+<?xml version="1.0"?>
+
+
+<PropertyList>
+
+    <sim>
+        <systems>
+            <autopilot>
+                <path>Aircraft/SR71-BlackBird/Systems/SR71autopilot.xml</path>
+            </autopilot>
+            <electrical>
+                <path>Aircraft/SR71-BlackBird/Systems/dummy-electrical.xml</path>
+            </electrical>
+            <autoflight>
+                <serviceable type="bool">true</serviceable>
+            </autoflight>
+        </systems>
+        <rendering>
+                <redout>
+                    <red>0</red>
+                    <alpha>0</alpha>
+                    <enabled type="bool">false</enabled>
+                </redout>
+        </rendering>
+        <multiplay>
+            <generic>
+                    <float n="0" alias="/surface-positions/gear-pos-norm"/>
+                    <float n="1" alias="/surface-positions/chute-pos-norm"/>
+                    <float n="2" alias="/surface-positions/canopy-pos-norm"/>
+                    <float n="3" alias="/gear/gear[0]/steering-norm"/>
+                    <float n="4" alias="/fdm/jsbsim/fcs/landing-light"/>
+                    <float n="5" alias="/fdm/jsbsim/propulsion/engine[0]/set-thrust"/>
+                    <float n="6" alias="/fdm/jsbsim/propulsion/engine[1]/set-thrust"/>
+                    <float n="7" alias="/engines/engine[0]/nozzle-pos-norm"/>
+                    <float n="8" alias="/engines/engine[1]/nozzle-pos-norm"/>
+                    <string n="0"></string>
+            </generic>
+        </multiplay>
+		<failure-manager>
+			<engines>
+				<engine n="0">
+					<serviceable type="bool">true</serviceable>
+				</engine>
+				<engine n="1">
+					<serviceable type="bool">true</serviceable>
+				</engine>
+			</engines>
+		</failure-manager>
+		
+
+		<menubar>
+			<default>
+				<menu n="10">
+					<label>SR-71</label>
+					<enabled type="bool">true</enabled>
+					<item n="0">
+						<label>Sensor Interface</label>
+						<binding>
+							<command>nasal</command>
+							<script>sensors.sensors_dialog.open()</script>
+						</binding>
+					</item>
+					<item n="1">
+					    <label>Event Log</label>
+					    <binding>
+						<command>dialog-show</command>
+						<dialog-name>flightlog</dialog-name>
+					    </binding>
+					</item>
+					<item n="2">
+					    <label>IFF channel</label>
+					    <binding>
+						<command>dialog-show</command>
+						<dialog-name>iff</dialog-name>
+					    </binding>
+					</item>
+					
+				</menu>
+			</default>
+		</menubar>
+		
+        <help include="Help/BlackBird-help.xml"/>
+    </sim>
+
+    <input include="Inputs/Blackbird-input.xml"/>
+	
+    <environment>
+        <params>
+            <control-fdm-atmosphere type="bool">false</control-fdm-atmosphere>
+        </params>
+    </environment>
+
+    <controls>
+        <!-- Start with the Parking Brake on -->
+        <gear>
+            <brake-parking type="double">1.0</brake-parking>
+        </gear>
+	<iff>
+	    <channel type="int">0000</channel>
+	</iff>
+        <switches>
+            <landing-light type="bool">true</landing-light>
+            <master-avionics type="bool">false</master-avionics>
+        </switches>
+
+        <lighting>
+            <instruments-norm type="double">0</instruments-norm>
+        </lighting>
+
+        <engines>
+            <engine n="0">
+                <fuel-pump type="bool">false</fuel-pump>
+                <master-bat type="bool">false</master-bat>
+            </engine>
+            <engine n="1">
+                <fuel-pump type="bool" >false</fuel-pump>
+                 <master-bat type="bool">false</master-bat>
+            </engine>
+        </engines>
+
+        <electric>
+            <master-switch type="bool">false</master-switch>
+            <battery-switch type="bool">false</battery-switch>
+            <external-power type="bool" >false</external-power>
+        </electric>
+
+        <flight>
+            <canopy type="bool">true</canopy>
+            <op-refuel ype="double">0</op-refuel>
+        </flight>
+        <jettison>
+            <canopy type="float">0</canopy>
+        </jettison>
+		<sensors>
+			<recording type="bool">0</recording> <!-- turns recording on or off -->
+			<mode type="string">SLR</mode> <!-- possible modes (for now) are SLR and OBC -->
+			<log-count type="int">0</log-count>
+			<ready-write type="bool">0</ready-write>
+			<!-- OBC -->
+			<obc>
+				<output-rate type="int">10</output-rate>
+				<exposures-remaining type="int">350</exposures-remaining>
+			</obc>
+			<!-- SLR -->
+			<slr>
+				<output-rate type="int">5</output-rate>
+				<exposures-remaining type="int">800</exposures-remaining>
+				<mode type="string">manual</mode>
+				<operate type="string">cold</operate>
+				<stab type="string">r</stab>
+				<srv type="string">r</srv>
+				<start-range type="int">10</start-range>
+				<side type="string">left</side>
+				<width type="string">narrow</width>
+			</slr>
+		</sensors>
+    </controls>
+
+    <engines>
+        <engine n="0">
+                    <running>false</running>
+					<teb-shots type="int">16</teb-shots>
+					<aug-avail type="bool">true</aug-avail>
+        </engine>
+        <engine n="1">
+                    <running>false</running>
+					<teb-shots type="int">16</teb-shots>
+					<aug-avail type="bool">true</aug-avail>
+        </engine>
+    </engines>
+	
+		<consumables n="0">
+		<fuel>
+			<tank n="0">
+				<name>Right Fuel Manifold</name>
+			</tank>
+			<tank n="1">
+				<name>Left Fuel Manifold</name>
+			</tank>
+			<tank n="2">
+				<name>Tank 1A</name>
+			</tank>
+			<tank n="3">
+				<name>Tank 1</name>
+			</tank>
+			<tank n="4">
+				<name>Tank 2</name>
+			</tank>
+			<tank n="5">
+				<name>Tank 3</name>
+			</tank>
+			<tank n="6">
+				<name>Tank 4</name>
+			</tank>
+			<tank n="7">
+				<name>Tank 5</name>
+			</tank>
+			<tank n="8">
+				<name>Tank 6A</name>
+			</tank>
+			<tank n="9">
+				<name>Tank 6B</name>
+			</tank>
+		</fuel>
+	</consumables>
+	
+
+    <autopilot>
+            <settings>
+                    <target-altitude-ft type="float">33000</target-altitude-ft>
+                    <target-pushover-altitude-ft type="float">30000</target-pushover-altitude-ft>
+                    <target-aoa-deg type="float">0.3</target-aoa-deg>
+                    <target-pitch-deg type="float">10</target-pitch-deg>
+                    <true-heading-deg>180</true-heading-deg>
+            </settings>
+    </autopilot>
+
+    <instrumentation>
+	<iff>
+	    <power_prop type="string">instrumentation/iff/power</power_prop>
+	    <channel_prop
+		type="string">instrumentation/iff/channel</channel_prop>
+	    <channel type="int">0000</channel>
+	    <power type="bool">true</power>
+	</iff>
+	
+            <wxradar>
+                <switch type="string" archive="y">ON</switch>
+                <mode-control type="int" archive="y">1</mode-control>
+                <display-controls>
+                        <WX type="bool" archive="y">true</WX>
+                        <centre type="bool"  archive="y">true</centre>
+                        <data type="bool"  archive="y">false</data>
+                        <pos type="bool" archive="y">false</pos>
+                        <rotate type="bool" archive="y">true</rotate>
+                        <symbol type="bool" archive="y">true</symbol>
+                </display-controls>
+                <serviceable type="bool">true</serviceable>
+                <range type="int"  archive="y">40</range>
+                <mode type="string" archive="y">WX</mode>
+                <lightning type="bool"  archive="y">false</lightning>
+                <display-mode type="string"  archive="y">plan</display-mode>
+                <minimized type="bool" archive="y">false</minimized>
+            </wxradar>
+			<radar>
+				<range type="int" archive="y">20</range>
+				<minimized type="bool" archive="y">false</minimized>
+			</radar>
+			<efis>
+				<inputs>
+					<arpt type="bool">true</arpt> <!-- show airports -->
+					<range-nm type="int">120</range-nm> <!-- range set to 120nm. May allow to be toggleable later. -->
+					<nd-centered type="bool">false</nd-centered>
+					<data type="bool">true</data>
+					<lh-vor-adf type="int">0</lh-vor-adf>
+					<rh-vor-adf type="int">0</rh-vor-adf>
+					<pos type="bool">false</pos>
+					<sta type="bool">true</sta>
+					<terr type="bool">false</terr>
+					<tfc type="bool">false</tfc>
+					<wpt type="bool">true</wpt>
+					<wxr type="bool">false</wxr>
+				</inputs>
+				<mfd>
+					<display-mode type="string">PLAN</display-mode>
+					<display-type type="string">CRT</display-type>
+					<rangearc type="bool">false</rangearc>
+					<true-north type="bool">false</true-north>
+				</mfd>
+				<hdg-trk-selected type="bool">false</hdg-trk-selected>
+				<hdg-bug-only type="bool">false</hdg-bug-only>
+			</efis>
+			<teb>
+				<display n="0" type="int">16</display>
+				<display n="1" type="int">16</display>
+			</teb>
+    </instrumentation>
+	
+	
+
+    <fdm><!-- Start with Canopy open -->
+            <jsbsim>
+                    <fcs>
+                            <canopy-cmd-norm>1</canopy-cmd-norm>
+                    </fcs>
+                    <systems>
+                        <lighting-instruments-norm>0.3</lighting-instruments-norm>
+                    </systems>
+            </jsbsim>
+    </fdm>
+
+	<systems>
+		<refuel>
+			<type>boom</type>
+			<serviceable type="bool">true</serviceable>
+			<max-fuel-transfer-lbs-min>6000</max-fuel-transfer-lbs-min>
+			<offset-x-m>0</offset-x-m>
+			<offset-y-m>0</offset-y-m>
+			<offset-z-m>0</offset-z-m>
+		</refuel>
+	</systems>
+
+	<payload>
+	    <armament>
+		<models type="string">Aircraft/SR71-BlackBird/Models/Armament/</models>
+		<msg type="bool">true</msg>
+		<spectator type="bool">false</spectator>
+		<MLW-bearing type="double">0</MLW-bearing>
+		<MLW-count type="int">0</MLW-count>
+		<MLW-launcher type="string"></MLW-launcher>
+		<MAW-bearing type="double">0</MAW-bearing>
+		<MAW-active type="bool">false</MAW-active>
+		<spike type="bool">false</spike>
+		<enable-craters type="bool">true</enable-craters>
+	    </armament>
+	</payload>
+	
+	<nasal>
+	        <notifications>
+		    <file>Aircraft/SR71-BlackBird/Nasal/ArmamentNotification.nas</file>
+		    <file>Aircraft/SR71-BlackBird/Nasal/GeoBridgedTransmitter.nas</file>
+		</notifications>
+
+			<sr71>
+				<file>Aircraft/SR71-BlackBird/Nasal/sr71.nas</file>
+			</sr71>
+			<radar_logic>
+				<file>Aircraft/SR71-BlackBird/Nasal/radar-logic.nas</file>
+			</radar_logic>
+			<sensors>
+				<file>Aircraft/SR71-BlackBird/Nasal/sensor_control.nas</file>
+			</sensors>
+			<terrain>
+				<file>Aircraft/SR71-BlackBird/Nasal/terrain.nas</file>
+			</terrain>
+			<aar>
+				<file>Aircraft/SR71-BlackBird/Nasal/aar.nas</file>
+			</aar>
+			<damage>
+				<file>Aircraft/SR71-BlackBird/Nasal/damage.nas</file>
+			</damage>
+			<nav_display>
+				<file>Aircraft/SR71-BlackBird/Models/Instruments/NavDisplay/nd.nas</file>
+			</nav_display>
+        <crashandstress>
+	    <file>Aircraft/SR71-Blackbird/Nasal/crash-and-stress.nas</file>
+	</crashandstress>    <!-- plane go boom when crash -->
+	<iff>
+	    <file>Aircraft/SR71-BlackBird/Nasal/iff.nas</file>
+	</iff>
+    </nasal>
+	
+	<!-- setting up properties for later -->
+	<fdm n="0">
+		<jsbsim>
+			<fcs>
+				<fuel-pump0>0</fuel-pump0>
+				<fuel-pump1>0</fuel-pump1>
+			</fcs>
+			<structural>
+				<wings>
+					<serviceable type="bool">true</serviceable>
+				</wings>
+			</structural>
+		</jsbsim>
+	</fdm>
+
+</PropertyList>
+
+
